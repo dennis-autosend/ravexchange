@@ -19,6 +19,11 @@ async function connectToDatabase() {
   return db;
 }
 
+// Root path handler
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to the ravExchange API' });
+});
+
 // GET all tickets
 app.get('/api/tickets', async (req, res) => {
   try {
@@ -26,6 +31,7 @@ app.get('/api/tickets', async (req, res) => {
     const tickets = await db.collection('tickets').find().toArray();
     res.json(tickets);
   } catch (error) {
+    console.error('Error fetching tickets:', error);
     res.status(500).json({ error: 'Failed to fetch tickets' });
   }
 });
@@ -37,6 +43,7 @@ app.post('/api/tickets', async (req, res) => {
     const result = await db.collection('tickets').insertOne(req.body);
     res.status(201).json(result.ops[0]);
   } catch (error) {
+    console.error('Error creating ticket:', error);
     res.status(500).json({ error: 'Failed to create ticket' });
   }
 });
@@ -56,6 +63,7 @@ app.put('/api/tickets/:id', async (req, res) => {
       res.status(404).json({ error: 'Ticket not found' });
     }
   } catch (error) {
+    console.error('Error updating ticket:', error);
     res.status(500).json({ error: 'Failed to update ticket' });
   }
 });
@@ -71,11 +79,12 @@ app.delete('/api/tickets/:id', async (req, res) => {
       res.status(404).json({ error: 'Ticket not found' });
     }
   } catch (error) {
+    console.error('Error deleting ticket:', error);
     res.status(500).json({ error: 'Failed to delete ticket' });
   }
 });
 
-// Handle ticket purchase (you can modify this as needed)
+// Handle ticket purchase
 app.post('/api/purchase', async (req, res) => {
   try {
     const db = await connectToDatabase();
@@ -91,8 +100,15 @@ app.post('/api/purchase', async (req, res) => {
       res.status(400).json({ error: 'Ticket not available' });
     }
   } catch (error) {
+    console.error('Error processing purchase:', error);
     res.status(500).json({ error: 'Failed to process purchase' });
   }
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: 'Internal Server Error' });
 });
 
 module.exports.handler = serverless(app);
