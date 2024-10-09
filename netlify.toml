@@ -1,7 +1,5 @@
-[
-    functions
-]
-  directory = "functions"
+[functions]
+  directory = "netlify/functions"
 
 [[
     redirects
