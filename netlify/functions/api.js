@@ -22,4 +22,8 @@ exports.handler = async function(event, context) {
       body: JSON.stringify({ error: "Not Found" })
     };
   }
+
+  if (event.httpMethod === 'POST') {
+    // Handle POST request
+  }
 };
