@@ -1,7 +1,7 @@
 const express = require('express');
 const serverless = require('serverless-http');
-const { MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors');
+const { MongoClient } = require('mongodb');
 
 const app = express();
 app.use(cors());
@@ -13,7 +13,7 @@ let cachedDb = null;
 async function connectToDatabase() {
   if (cachedDb) return cachedDb;
   
-  const client = await MongoClient.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
+  const client = await MongoClient.connect(mongoUri);
   const db = client.db('ravexchange'); // replace 'ravexchange' with your database name if different
   cachedDb = db;
   return db;
@@ -48,61 +48,9 @@ app.post('/api/tickets', async (req, res) => {
   }
 });
 
-// PUT (update) a ticket
-app.put('/api/tickets/:id', async (req, res) => {
-  try {
-    const db = await connectToDatabase();
-    const result = await db.collection('tickets').findOneAndUpdate(
-      { _id: ObjectId(req.params.id) },
-      { $set: req.body },
-      { returnOriginal: false }
-    );
-    if (result.value) {
-      res.json(result.value);
-    } else {
-      res.status(404).json({ error: 'Ticket not found' });
-    }
-  } catch (error) {
-    console.error('Error updating ticket:', error);
-    res.status(500).json({ error: 'Failed to update ticket' });
-  }
-});
-
-// DELETE a ticket
-app.delete('/api/tickets/:id', async (req, res) => {
-  try {
-    const db = await connectToDatabase();
-    const result = await db.collection('tickets').findOneAndDelete({ _id: ObjectId(req.params.id) });
-    if (result.value) {
-      res.json({ message: 'Ticket deleted successfully' });
-    } else {
-      res.status(404).json({ error: 'Ticket not found' });
-    }
-  } catch (error) {
-    console.error('Error deleting ticket:', error);
-    res.status(500).json({ error: 'Failed to delete ticket' });
-  }
-});
-
-// Handle ticket purchase
-app.post('/api/purchase', async (req, res) => {
-  try {
-    const db = await connectToDatabase();
-    const { ticketId } = req.body;
-    const result = await db.collection('tickets').findOneAndUpdate(
-      { _id: ObjectId(ticketId), sold: false },
-      { $set: { sold: true } },
-      { returnOriginal: false }
-    );
-    if (result.value) {
-      res.json({ message: 'Ticket purchased successfully', ticket: result.value });
-    } else {
-      res.status(400).json({ error: 'Ticket not available' });
-    }
-  } catch (error) {
-    console.error('Error processing purchase:', error);
-    res.status(500).json({ error: 'Failed to process purchase' });
-  }
+// Catch-all route
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not Found' });
 });
 
 // Error handling middleware
