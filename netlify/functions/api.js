@@ -1,3 +1,4 @@
+console.log('API function is running');
 const express = require('express');
 const serverless = require('serverless-http');
 const cors = require('cors');
