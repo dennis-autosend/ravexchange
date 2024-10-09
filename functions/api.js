@@ -20,12 +20,12 @@ async function connectToDatabase() {
 }
 
 // Root path handler
-app.get('/', (req, res) => {
+app.get('/.netlify/functions/api', (req, res) => {
   res.json({ message: 'Welcome to the ravExchange API' });
 });
 
 // GET all tickets
-app.get('/api/tickets', async (req, res) => {
+app.get('/.netlify/functions/api/tickets', async (req, res) => {
   try {
     const db = await connectToDatabase();
     const tickets = await db.collection('tickets').find().toArray();
@@ -37,7 +37,7 @@ app.get('/api/tickets', async (req, res) => {
 });
 
 // POST a new ticket
-app.post('/api/tickets', async (req, res) => {
+app.post('/.netlify/functions/api/tickets', async (req, res) => {
   try {
     const db = await connectToDatabase();
     const result = await db.collection('tickets').insertOne(req.body);
@@ -49,14 +49,8 @@ app.post('/api/tickets', async (req, res) => {
 });
 
 // Catch-all route
-app.use((req, res) => {
+app.use('/.netlify/functions/api/*', (req, res) => {
   res.status(404).json({ error: 'Not Found' });
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ error: 'Internal Server Error' });
 });
 
 module.exports.handler = serverless(app);
