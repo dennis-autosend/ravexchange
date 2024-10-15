@@ -7,6 +7,7 @@ import { handleBuyTicket as buyTicket } from './components/tickets/buyTickets';
 import { deleteTicket } from './components/tickets/deleteTicket';
 import { getListings } from './components/tickets/getListings';
 import { postTicket } from './components/tickets/postTicket';
+import { updateTicket } from './components/tickets/updateTicket';
 
 // Utility functions for formatting
 const capitalizeWords = (str) => {
@@ -56,9 +57,11 @@ const TicketExchangeApp = () => {
     buyTicket(post, isLoggedIn, setIsVerificationOpen, userPhoneNumber);
   };
 
-  const handleUpdateTicket = (post) => {
-    // Update ticket logic here
-    console.log('Update ticket:', post);
+  const handleUpdateTicket = async (post, updatedData) => {
+    const success = await updateTicket(post, updatedData, userPhoneNumber, setPosts);
+    if (success) {
+      // 更新が成功した場合、必要に応じて追加の処理を行う
+    }
   };
 
   const handleDeleteTicket = (post) => {
