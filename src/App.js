@@ -20,14 +20,29 @@ const TicketExchangeApp = () => {
   const [isVerificationOpen, setIsVerificationOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userPhoneNumber, setUserPhoneNumber] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchTickets = async () => {
       const tickets = await getListings();
       setPosts(tickets);
+      setFilteredPosts(tickets);
     };
     fetchTickets();
   }, []);
+
+  const handleSearch = (event) => {
+    const term = event.target.value.toLowerCase();
+    setSearchTerm(term);
+    const filtered = posts.filter(post =>
+      post.event.toLowerCase().includes(term) ||
+      post.details.toLowerCase().includes(term) ||
+      post.price.toString().includes(term) ||
+      new Date(post.eventDate).toLocaleDateString().includes(term)
+    );
+    setFilteredPosts(filtered);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -86,8 +101,16 @@ const TicketExchangeApp = () => {
             handlePostTicket={handlePostTicket}
           />
 
+          <input
+            type="text"
+            placeholder="Search tickets..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="w-full p-2 mb-4 border rounded"
+          />
+
           <TicketList
-            posts={posts}
+            posts={filteredPosts}
             handleBuyTicket={handleBuyTicket}
             handleUpdateTicket={handleUpdateTicket}
             handleDeleteTicket={handleDeleteTicket}
