@@ -1,3 +1,5 @@
+import { reloadPageWithLogin } from '../interface/ReloadPageWithLogin';
+
 export const deleteTicket = async (post, userPhoneNumber, setPosts) => {
     try {
         console.log('Sending delete request for ticket:', post.id);
@@ -15,6 +17,7 @@ export const deleteTicket = async (post, userPhoneNumber, setPosts) => {
         if (data.success) {
             setPosts(prevPosts => prevPosts.filter(ticket => ticket.id !== post.id));
             alert('Ticket deleted successfully!');
+            reloadPageWithLogin(userPhoneNumber);
         } else {
             console.error('Failed to delete ticket:', data.message);
             alert(`Failed to delete ticket. Error: ${data.message}`);

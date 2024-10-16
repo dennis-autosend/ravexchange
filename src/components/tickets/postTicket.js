@@ -1,3 +1,5 @@
+import { reloadPageWithLogin } from '../interface/ReloadPageWithLogin';
+
 export const postTicket = async (newPost, userPhoneNumber, setPosts, setNewPost) => {
     if (newPost.event && newPost.price && newPost.details && newPost.eventDate) {
         try {
@@ -24,6 +26,7 @@ export const postTicket = async (newPost, userPhoneNumber, setPosts, setNewPost)
                 setPosts(prevPosts => [newTicket, ...prevPosts]);
                 setNewPost({ event: '', price: '', details: '', eventDate: '' });
                 alert('Ticket posted successfully!');
+                reloadPageWithLogin(userPhoneNumber);
             } else {
                 alert(`Failed to post ticket. Error: ${data.error}`);
             }

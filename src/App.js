@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LoginStatus from './components/interface/LoginStatus';
+import { checkLoginStatus } from './components/interface/ReloadPageWithLogin';
 import TicketForm from './components/interface/TicketForm';
 import TicketList from './components/interface/TicketList';
 import PhoneVerificationPopup, { formatPhoneNumber } from './components/otp/PhoneVerificationPopup';
@@ -24,6 +25,10 @@ const TicketExchangeApp = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
+    const { isLoggedIn: storedIsLoggedIn, userPhoneNumber: storedUserPhoneNumber } = checkLoginStatus();
+    setIsLoggedIn(storedIsLoggedIn);
+    setUserPhoneNumber(storedUserPhoneNumber);
+
     const fetchTickets = async () => {
       const tickets = await getListings();
       setPosts(tickets);

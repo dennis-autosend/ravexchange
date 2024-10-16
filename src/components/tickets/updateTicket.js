@@ -1,3 +1,5 @@
+import { reloadPageWithLogin } from '../interface/ReloadPageWithLogin';
+
 export const updateTicket = async (post, updatedData, userPhoneNumber, setPosts) => {
     try {
         const response = await fetch('/.netlify/functions/update-ticket', {
@@ -19,6 +21,7 @@ export const updateTicket = async (post, updatedData, userPhoneNumber, setPosts)
                 ticket.id === post.id ? { ...ticket, ...updatedData } : ticket
             ));
             alert('Ticket updated successfully!');
+            reloadPageWithLogin(userPhoneNumber);
             return true;
         } else {
             alert(`Failed to update ticket. Error: ${data.message}`);
