@@ -13,6 +13,7 @@ export const getListings = async () => {
             price: ticket.price,
             mobileNumber: formatPhoneNumber(ticket.sellerId),
             details: ticket.description,
+            eventDate: ticket.eventDate,
             sold: ticket.status !== "available"
         }));
     } catch (error) {

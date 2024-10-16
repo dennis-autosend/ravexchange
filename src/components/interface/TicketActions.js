@@ -81,6 +81,13 @@ const TicketActions = ({ post, handleBuyTicket, handleUpdateTicket, handleDelete
                         placeholder="Price"
                         type="number"
                     />
+                    <Input
+                        name="eventDate"
+                        value={updatedPost.eventDate}
+                        onChange={handleInputChange}
+                        placeholder="Event Date"
+                        type="date"
+                    />
                     <Textarea
                         name="details"
                         value={updatedPost.details}

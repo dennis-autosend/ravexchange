@@ -16,6 +16,7 @@ const TicketList = ({ posts, handleBuyTicket, handleUpdateTicket, handleDeleteTi
                     </CardHeader>
                     <CardContent>
                         <p className="font-bold text-lg">Price: ${post.price}</p>
+                        <p className="text-gray-600 mt-2">Date: {new Date(post.eventDate).toLocaleDateString()}</p>
                         <p className="text-gray-600 mt-2">{post.details}</p>
                     </CardContent>
                     <CardFooter>

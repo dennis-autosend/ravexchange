@@ -1,5 +1,5 @@
 export const postTicket = async (newPost, userPhoneNumber, setPosts, setNewPost) => {
-    if (newPost.event && newPost.price && newPost.details) {
+    if (newPost.event && newPost.price && newPost.details && newPost.eventDate) {
         try {
             const response = await fetch('/.netlify/functions/create-ticket', {
                 method: 'POST',
@@ -7,6 +7,7 @@ export const postTicket = async (newPost, userPhoneNumber, setPosts, setNewPost)
                     eventName: newPost.event,
                     price: newPost.price,
                     description: newPost.details,
+                    eventDate: newPost.eventDate,
                     sellerId: userPhoneNumber
                 }),
             });
@@ -21,7 +22,7 @@ export const postTicket = async (newPost, userPhoneNumber, setPosts, setNewPost)
                     mobileNumber: userPhoneNumber
                 };
                 setPosts(prevPosts => [newTicket, ...prevPosts]);
-                setNewPost({ event: '', price: '', details: '' });
+                setNewPost({ event: '', price: '', details: '', eventDate: '' });
                 alert('Ticket posted successfully!');
             } else {
                 alert(`Failed to post ticket. Error: ${data.error}`);
@@ -31,6 +32,6 @@ export const postTicket = async (newPost, userPhoneNumber, setPosts, setNewPost)
             alert('An error occurred while posting the ticket. Please try again.');
         }
     } else {
-        alert('Please fill in all required fields (event, price, and details).');
+        alert('Please fill in all required fields (event, price, details, and event date).');
     }
 };

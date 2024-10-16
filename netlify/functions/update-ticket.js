@@ -6,8 +6,8 @@ exports.handler = async function (event, context) {
         const database = await connectToDatabase();
         const tickets = database.collection('tickets');
 
-        const { id, eventName, price, description, sellerId } = JSON.parse(event.body);
-        console.log('Received request to update ticket:', { id, eventName, price, description, sellerId });
+        const { id, eventName, price, description, eventDate, sellerId } = JSON.parse(event.body);
+        console.log('Received request to update ticket:', { id, eventName, price, description, eventDate, sellerId });
 
         const result = await tickets.updateOne(
             { _id: new ObjectId(id), sellerId: sellerId },
@@ -16,6 +16,7 @@ exports.handler = async function (event, context) {
                     eventName: eventName,
                     price: price,
                     description: description,
+                    eventDate: eventDate,
                     updatedAt: new Date()
                 }
             }

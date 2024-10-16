@@ -8,9 +8,9 @@ exports.handler = async function (event, context) {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
-    const { eventName, price, description, sellerId } = JSON.parse(event.body);
+    const { eventName, price, description, eventDate, sellerId } = JSON.parse(event.body);
 
-    if (!eventName || !price || !description || !sellerId) {
+    if (!eventName || !price || !description || !eventDate || !sellerId) {
         return { statusCode: 400, body: JSON.stringify({ error: 'Missing required fields' }) };
     }
 
@@ -23,6 +23,7 @@ exports.handler = async function (event, context) {
             eventName,
             price: parseFloat(price),
             description,
+            eventDate,
             sellerId,
             status: 'available',
             createdAt: new Date()

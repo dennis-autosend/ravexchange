@@ -7,6 +7,7 @@ export const updateTicket = async (post, updatedData, userPhoneNumber, setPosts)
                 eventName: updatedData.event,
                 price: updatedData.price,
                 description: updatedData.details,
+                eventDate: updatedData.eventDate,
                 sellerId: userPhoneNumber
             }),
         });

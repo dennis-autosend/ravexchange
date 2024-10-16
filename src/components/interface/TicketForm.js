@@ -27,6 +27,14 @@ const TicketForm = ({ newPost, handleInputChange, handlePostTicket }) => {
                         type="number"
                         required
                     />
+                    <Input
+                        name="eventDate"
+                        value={newPost.eventDate}
+                        onChange={handleInputChange}
+                        placeholder="Event Date"
+                        type="date"
+                        required
+                    />
                     <Textarea
                         name="details"
                         value={newPost.details}
