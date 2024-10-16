@@ -1,4 +1,4 @@
-import { reloadPageWithLogin } from '../interface/ReloadPageWithLogin';
+import { reloadPageWithLogin } from '../state/ReloadPageWithLogin';
 
 export const updateTicket = async (post, updatedData, userPhoneNumber, setPosts) => {
     try {

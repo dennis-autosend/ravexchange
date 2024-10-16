@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import LoginStatus from './components/interface/LoginStatus';
-import { checkLoginStatus } from './components/interface/ReloadPageWithLogin';
 import TicketForm from './components/interface/TicketForm';
 import TicketList from './components/interface/TicketList';
 import PhoneVerificationPopup, { formatPhoneNumber } from './components/otp/PhoneVerificationPopup';
+import { checkLoginStatus } from './components/state/ReloadPageWithLogin';
 import { handleBuyTicket as buyTicket } from './components/tickets/buyTickets';
 import { deleteTicket } from './components/tickets/deleteTicket';
 import { getListings } from './components/tickets/getListings';

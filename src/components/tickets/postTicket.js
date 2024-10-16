@@ -1,4 +1,4 @@
-import { reloadPageWithLogin } from '../interface/ReloadPageWithLogin';
+import { reloadPageWithLogin } from '../state/ReloadPageWithLogin';
 
 export const postTicket = async (newPost, userPhoneNumber, setPosts, setNewPost) => {
     if (newPost.event && newPost.price && newPost.details && newPost.eventDate) {
