@@ -25,7 +25,7 @@ const TicketExchangeApp = () => {
   const [userPhoneNumber, setUserPhoneNumber] = useState('');
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortOption, setSortOption] = useState('dateAsc');
+  const [sortOption, setSortOption] = useState('newest');
 
   const handleSort = createHandleSort(setSortOption, filteredPosts, setFilteredPosts);
 

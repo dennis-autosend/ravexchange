@@ -5,7 +5,9 @@ exports.handler = async function (event, context) {
         const database = await connectToDatabase();
         const tickets = database.collection('tickets');
 
-        const availableTickets = await tickets.find({ status: "available" }).toArray();
+        const availableTickets = await tickets.find({ status: "available" })
+            .sort({ updatedAt: -1, createdAt: -1 })
+            .toArray();
 
         return {
             statusCode: 200,

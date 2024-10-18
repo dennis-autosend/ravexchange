@@ -11,8 +11,10 @@ export const createHandleSort = (setSortOption, filteredPosts, setFilteredPosts)
                     return a.price - b.price;
                 case 'priceDesc':
                     return b.price - a.price;
+                case 'newest':
+                    return new Date(b.updatedAt) - new Date(a.updatedAt);
                 default:
-                    return 0;
+                    return new Date(b.updatedAt) - new Date(a.updatedAt);
             }
         });
         setFilteredPosts(sortedPosts);

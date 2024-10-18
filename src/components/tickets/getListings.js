@@ -14,8 +14,9 @@ export const getListings = async () => {
             mobileNumber: formatPhoneNumber(ticket.sellerId),
             details: ticket.description,
             eventDate: ticket.eventDate,
-            sold: ticket.status !== "available"
-        }));
+            sold: ticket.status !== "available",
+            updatedAt: ticket.updatedAt || ticket.createdAt
+        })).sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     } catch (error) {
         console.error('Error fetching tickets:', error);
         throw error;

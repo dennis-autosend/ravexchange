@@ -7,6 +7,7 @@ const TicketList = ({ posts, handleBuyTicket, handleUpdateTicket, handleDeleteTi
     return (
         <div>
             <select onChange={(e) => handleSort(e.target.value)} value={sortOption} className="w-full p-2 mb-4 border rounded">
+                <option value="">Sort by...</option>
                 <option value="dateAsc">Event Date (Ascending)</option>
                 <option value="dateDesc">Event Date (Descending)</option>
                 <option value="priceAsc">Price (Low to High)</option>
