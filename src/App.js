@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createHandleSort } from './components/interface/HandleSort';
 import LoginStatus from './components/interface/LoginStatus';
 import TicketForm from './components/interface/TicketForm';
 import TicketList from './components/interface/TicketList';
@@ -24,6 +25,9 @@ const TicketExchangeApp = () => {
   const [userPhoneNumber, setUserPhoneNumber] = useState('');
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState('dateAsc');
+
+  const handleSort = createHandleSort(setSortOption, filteredPosts, setFilteredPosts);
 
   useEffect(() => {
     const { isLoggedIn: storedIsLoggedIn, userPhoneNumber: storedUserPhoneNumber } = checkLoginStatus();
@@ -123,6 +127,8 @@ const TicketExchangeApp = () => {
             handleUpdateTicket={handleUpdateTicket}
             handleDeleteTicket={handleDeleteTicket}
             userPhoneNumber={userPhoneNumber}
+            handleSort={handleSort}
+            sortOption={sortOption}
           />
         </div>
       </div>
