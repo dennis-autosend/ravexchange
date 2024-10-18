@@ -1,10 +1,21 @@
 import React from 'react';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 
 const TicketForm = ({ newPost, handleInputChange, handlePostTicket }) => {
+    const handleDateChange = (date) => {
+        handleInputChange({
+            target: {
+                name: 'eventDate',
+                value: date
+            }
+        });
+    };
+
     return (
         <Card className="mb-8">
             <CardHeader>
@@ -27,12 +38,12 @@ const TicketForm = ({ newPost, handleInputChange, handlePostTicket }) => {
                         type="number"
                         required
                     />
-                    <Input
-                        name="eventDate"
-                        value={newPost.eventDate}
-                        onChange={handleInputChange}
-                        placeholder="Event Date"
-                        type="date"
+                    <DatePicker
+                        selected={newPost.eventDate ? new Date(newPost.eventDate) : null}
+                        onChange={handleDateChange}
+                        dateFormat="yyyy/MM/dd"
+                        placeholderText="Select Event Date"
+                        className="w-full p-2 border rounded"
                         required
                     />
                     <Textarea
